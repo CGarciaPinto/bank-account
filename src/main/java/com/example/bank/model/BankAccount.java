@@ -6,6 +6,7 @@ public class BankAccount {
 
     private final String numeroDeCompte;
     private double solde;
+    private double decouvertMax;
 
     public String getNumeroDeCompte() {
         return numeroDeCompte;
@@ -19,38 +20,56 @@ public class BankAccount {
         this.solde = solde;
     }
 
-    public BankAccount(double solde) {
+    public double getDecouvertMax() {
+        return decouvertMax;
+    }
+
+    public void setDecouvertMax(double decouvertMax) {
+        this.decouvertMax = decouvertMax;
+    }
+
+    public BankAccount(double solde, double decouvertMax) {
         this.numeroDeCompte = UUID.randomUUID().toString();
         this.solde = solde;
+        this.decouvertMax = decouvertMax;
+    }
+
+    public BankAccount(double solde) {
+        this(solde, 0.0);
     }
 
     public BankAccount(){
-        this.numeroDeCompte = UUID.randomUUID().toString();
-        this.solde = 0;
+        this(0.0, 0.0);
     }
 
     public void deposerArgent(double montant) {
         if(montant<=0) {
             throw new IllegalArgumentException("Le montant du dépôt doit être supérieur à 0.");
         }
-        this.solde += montant;
+        solde += montant;
     }
 
     public void retirerArgent(double montant) {
         if(montant<=0) {
             throw new IllegalArgumentException("Le montant du retrait doit être supérieur à 0.");
         }
-        if (montant > this.solde) {
-            throw new IllegalArgumentException("Fonds insuffisants.");
+
+        double soldeFinal = solde - montant;
+
+        if (soldeFinal < -decouvertMax) {
+            throw new IllegalArgumentException("Retrait impossible : dépasse l'autorisation de découvert" +
+                    " (maximum découvert : " + decouvertMax + ").");
         }
-        this.solde-=montant;
+
+        solde=soldeFinal;
     }
 
     @Override
     public String toString() {
-        return "BankAccount{" +
-                "accountNumber='" + numeroDeCompte + '\'' +
-                ", balance=" + solde +
+        return "Compte bancaire{" +
+                "numeroDeCompte='" + numeroDeCompte + '\'' +
+                ", solde=" + solde +
+                ", decouvertMax=" + decouvertMax +
                 '}';
     }
 

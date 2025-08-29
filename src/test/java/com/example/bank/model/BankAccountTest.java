@@ -46,13 +46,37 @@ class BankAccountTest {
 
     @Test
     void testRetirerArgentFondsInsuffisants() {
-        BankAccount compte = new BankAccount(50);
+        BankAccount compte = new BankAccount(50); //decouvertMax = 0
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> compte.retirerArgent(100)
         );
 
-        assertEquals("Fonds insuffisants.", exception.getMessage());
+        assertEquals(
+                "Retrait impossible : dépasse l'autorisation de découvert (maximum découvert : 0.0).", exception.getMessage());
     }
+
+    @Test
+    void testRetirerArgentFondsSuffisants() {
+        BankAccount compte = new BankAccount(50, 200);
+        compte.retirerArgent(200);
+        assertEquals(-150.0, compte.getSolde());
+    }
+
+    @Test
+    void testToString() {
+        BankAccount compte = new BankAccount(500.0, 100.0);
+        String resultat = compte.toString();
+
+        // Aseguramos que el toString contiene los campos importantes
+        assertTrue(resultat.contains("Compte bancaire"));
+        assertTrue(resultat.contains("solde=500.0"));
+        assertTrue(resultat.contains("decouvertMax=100.0"));
+        assertTrue(resultat.contains("numeroDeCompte="));
+
+        // Imprimimos para inspección manual si queremos
+        System.out.println(resultat);
+    }
+
 }
