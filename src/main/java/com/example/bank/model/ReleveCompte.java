@@ -14,7 +14,7 @@ public class ReleveCompte {
     private final double soldeActuel;
     private final List<Operation> operations;
 
-    public ReleveCompte(BankAccount compte) {
+    public ReleveCompte(CompteBancaire compte) {
         this.typeCompte = compte instanceof LivretEpargne ? LIVRET_EPARGNE : COMPTE_COURANT;
         this.soldeActuel = compte.getSolde();
 

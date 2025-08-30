@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BankAccount {
+public class CompteBancaire {
 
     private final String numeroDeCompte;
     private double solde;
@@ -39,17 +39,17 @@ public class BankAccount {
     }
 
 
-    public BankAccount(double solde, double decouvertMax) {
+    public CompteBancaire(double solde, double decouvertMax) {
         this.numeroDeCompte = UUID.randomUUID().toString();
         this.solde = solde;
         this.decouvertMax = decouvertMax;
     }
 
-    public BankAccount(double solde) {
+    public CompteBancaire(double solde) {
         this(solde, 0.0);
     }
 
-    public BankAccount(){
+    public CompteBancaire(){
         this(0.0, 0.0);
     }
 

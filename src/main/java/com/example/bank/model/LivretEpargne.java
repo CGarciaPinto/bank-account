@@ -3,7 +3,7 @@ package com.example.bank.model;
 import com.example.bank.model.enums.TypeLivretEnum;
 import com.example.bank.model.enums.TypeOperationEnum;
 
-public class LivretEpargne extends BankAccount {
+public class LivretEpargne extends CompteBancaire {
 
     private final TypeLivretEnum typeLivret;
 

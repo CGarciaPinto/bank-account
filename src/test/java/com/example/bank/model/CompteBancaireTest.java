@@ -4,18 +4,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BankAccountTest {
+class CompteBancaireTest {
 
     @Test
     void testDeposerArgentValide() {
-        BankAccount compte = new BankAccount();
+        CompteBancaire compte = new CompteBancaire();
         compte.deposerArgent(100);
         assertEquals(100, compte.getSolde());
     }
 
     @Test
     void testDeposerArgentMontantNegatifOuZero() {
-        BankAccount compte = new BankAccount();
+        CompteBancaire compte = new CompteBancaire();
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
@@ -27,14 +27,14 @@ class BankAccountTest {
 
     @Test
     void testRetirerArgentValide() {
-        BankAccount compte = new BankAccount(200);
+        CompteBancaire compte = new CompteBancaire(200);
         compte.retirerArgent(50);
         assertEquals(150, compte.getSolde());
     }
 
     @Test
     void testRetirerArgentMontantNegatifOuZero() {
-        BankAccount compte = new BankAccount(100);
+        CompteBancaire compte = new CompteBancaire(100);
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
@@ -46,7 +46,7 @@ class BankAccountTest {
 
     @Test
     void testRetirerArgentFondsInsuffisants() {
-        BankAccount compte = new BankAccount(50); //decouvertMax = 0
+        CompteBancaire compte = new CompteBancaire(50); //decouvertMax = 0
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
@@ -59,14 +59,14 @@ class BankAccountTest {
 
     @Test
     void testRetirerArgentFondsSuffisants() {
-        BankAccount compte = new BankAccount(50, 200);
+        CompteBancaire compte = new CompteBancaire(50, 200);
         compte.retirerArgent(200);
         assertEquals(-150.0, compte.getSolde());
     }
 
     @Test
     void testToString() {
-        BankAccount compte = new BankAccount(500.0, 100.0);
+        CompteBancaire compte = new CompteBancaire(500.0, 100.0);
         String resultat = compte.toString();
 
         // Aseguramos que el toString contiene los campos importantes
