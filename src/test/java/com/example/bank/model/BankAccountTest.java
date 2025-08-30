@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
-    void testDeposerArgent() {
+    void testDeposerArgentValide() {
         BankAccount compte = new BankAccount();
         compte.deposerArgent(100);
         assertEquals(100, compte.getSolde());
@@ -26,7 +26,7 @@ class BankAccountTest {
     }
 
     @Test
-    void testRetirerArgent() {
+    void testRetirerArgentValide() {
         BankAccount compte = new BankAccount(200);
         compte.retirerArgent(50);
         assertEquals(150, compte.getSolde());
