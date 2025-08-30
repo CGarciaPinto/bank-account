@@ -1,6 +1,7 @@
 package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeLivretEnum;
+import com.example.bank.model.enums.TypeOperationEnum;
 
 public class LivretEpargne extends BankAccount {
 
@@ -29,6 +30,7 @@ public class LivretEpargne extends BankAccount {
             );
         }
         super.setSolde(soldeFinal);
+        super.enregistrerOperation(TypeOperationEnum.DEPOT, montant, soldeFinal);
     }
 
     @Override
@@ -44,6 +46,7 @@ public class LivretEpargne extends BankAccount {
         }
 
         super.setSolde(soldeFinal);
+        super.enregistrerOperation(TypeOperationEnum.RETRAIT, montant, soldeFinal);
     }
 
     @Override

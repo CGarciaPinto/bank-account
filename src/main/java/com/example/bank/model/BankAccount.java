@@ -1,5 +1,9 @@
 package com.example.bank.model;
 
+import com.example.bank.model.enums.TypeOperationEnum;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class BankAccount {
@@ -7,6 +11,8 @@ public class BankAccount {
     private final String numeroDeCompte;
     private double solde;
     private double decouvertMax;
+
+    private final List<Operation> operations = new ArrayList<>();
 
     public String getNumeroDeCompte() {
         return numeroDeCompte;
@@ -28,6 +34,11 @@ public class BankAccount {
         this.decouvertMax = decouvertMax;
     }
 
+    public List<Operation> getOperations() {
+        return List.copyOf(operations);
+    }
+
+
     public BankAccount(double solde, double decouvertMax) {
         this.numeroDeCompte = UUID.randomUUID().toString();
         this.solde = solde;
@@ -46,7 +57,9 @@ public class BankAccount {
         if(montant<=0) {
             throw new IllegalArgumentException("Le montant du dépôt doit être supérieur à 0.");
         }
-        solde += montant;
+        double soldeFinal = solde + montant;
+        solde = soldeFinal;
+        enregistrerOperation(TypeOperationEnum.DEPOT, montant, soldeFinal);
     }
 
     public void retirerArgent(double montant) {
@@ -60,8 +73,12 @@ public class BankAccount {
             throw new IllegalArgumentException("Retrait impossible : dépasse l'autorisation de découvert" +
                     " (maximum découvert : " + decouvertMax + ").");
         }
-
         solde=soldeFinal;
+        enregistrerOperation(TypeOperationEnum.RETRAIT, montant, soldeFinal);
+    }
+
+    protected void enregistrerOperation(TypeOperationEnum type, double montant, double soldeFinal) {
+        operations.add(new Operation(type, montant, soldeFinal));
     }
 
     @Override
