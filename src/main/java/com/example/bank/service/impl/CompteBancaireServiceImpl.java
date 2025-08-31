@@ -43,9 +43,9 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     }
 
     @Override
-    public ReleveCompte getReleveCompte(Long id) {
+    public String getInfoReleveCompte(Long id) {
         CompteBancaire compte = compteBancaireRepository.findById(id).orElseThrow(() -> new RuntimeException("Compte introuvable"));
-        return new ReleveCompte(compte);
+        return new ReleveCompte(compte).toString();
     }
 
 }

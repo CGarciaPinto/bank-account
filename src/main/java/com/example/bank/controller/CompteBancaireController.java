@@ -38,8 +38,8 @@ public class CompteBancaireController {
     }
 
     @GetMapping("/{id}/releve")
-    public ReleveCompte getReleveCompte(@PathVariable Long id) {
-        return compteBancaireService.getReleveCompte(id);
+    public String getInfoReleveCompte(@PathVariable Long id) {
+        return compteBancaireService.getInfoReleveCompte(id);
     }
 
 }

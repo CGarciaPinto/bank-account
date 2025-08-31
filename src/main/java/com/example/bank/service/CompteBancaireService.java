@@ -15,6 +15,6 @@ public interface CompteBancaireService {
 
     CompteBancaire retirerArgent(Long id, double montant);
 
-    ReleveCompte getReleveCompte(Long id);
+    String getInfoReleveCompte(Long id);
 
 }
