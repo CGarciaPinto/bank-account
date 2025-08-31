@@ -1,6 +1,5 @@
 package com.example.bank.controller;
 
-import com.example.bank.model.CompteBancaire;
 import com.example.bank.model.LivretEpargne;
 import com.example.bank.model.enums.TypeLivretEnum;
 import com.example.bank.service.LivretEpargneService;
