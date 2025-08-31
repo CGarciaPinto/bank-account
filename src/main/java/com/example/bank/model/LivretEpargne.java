@@ -10,10 +10,20 @@ public class LivretEpargne extends CompteBancaire {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_livret", nullable = false)
-    private final TypeLivretEnum typeLivret;
+    private TypeLivretEnum typeLivret;
+
+    // Constructeur vide pour JPA
+    public LivretEpargne() {
+        super();
+    }
 
     public LivretEpargne(double solde, TypeLivretEnum typeLivret) {
         super(solde, 0); // Un livret d'épargne ne peut pas avoir de découvert
+        this.typeLivret = typeLivret;
+    }
+
+    public LivretEpargne(TypeLivretEnum typeLivret) {
+        super(0,0); // Un livret d'épargne ne peut pas avoir de découvert
         this.typeLivret = typeLivret;
     }
 
