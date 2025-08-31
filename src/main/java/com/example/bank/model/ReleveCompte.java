@@ -1,6 +1,7 @@
 package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeCompteEnum;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import static com.example.bank.model.enums.TypeCompteEnum.COMPTE_COURANT;
 import static com.example.bank.model.enums.TypeCompteEnum.LIVRET_EPARGNE;
 
+@Getter
 public class ReleveCompte {
     private final TypeCompteEnum typeCompte;
     private final double soldeActuel;
@@ -27,22 +29,6 @@ public class ReleveCompte {
                 .filter(op -> op.getDate().isAfter(unMoisAvant))
                 .sorted((o1, o2) -> o2.getDate().compareTo(o1.getDate())) // antéchronologique
                 .collect(Collectors.toList());
-    }
-
-    public CompteBancaire getCompteBancaire() {
-        return compteBancaire;
-    }
-
-    public TypeCompteEnum getTypeCompte() {
-        return typeCompte;
-    }
-
-    public double getSoldeActuel() {
-        return soldeActuel;
-    }
-
-    public List<Operation> getOperations() {
-        return operations;
     }
 
     @Override
