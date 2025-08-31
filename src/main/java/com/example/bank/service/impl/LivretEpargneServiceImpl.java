@@ -8,6 +8,7 @@ import com.example.bank.repository.LivretEpargneRepository;
 import com.example.bank.service.LivretEpargneService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class LivretEpargneServiceImpl implements LivretEpargneService {
     public List<LivretEpargneDTO> getAllLivretsEpargnes() {
         return livretEpargneRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(LivretEpargne::getId))
                 .map(LivretEpargneMapper::toDTO)
                 .collect(Collectors.toList());
     }

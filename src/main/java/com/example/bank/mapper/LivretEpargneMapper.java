@@ -13,7 +13,7 @@ public class LivretEpargneMapper {
         dto.setNumeroDeCompte(livret.getNumeroDeCompte());
         dto.setSolde(livret.getSolde());
         dto.setDecouvertMax(livret.getDecouvertMax());
-        dto.setTypeLivret(livret.getTypeLivret().name());
+        dto.setTypeLivret(livret.getTypeLivret());
 
         if (livret.getOperations() != null) {
             dto.setOperations(

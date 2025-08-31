@@ -3,19 +3,20 @@ package com.example.bank.model;
 import com.example.bank.model.enums.TypeLivretEnum;
 import com.example.bank.model.enums.TypeOperationEnum;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "livret_epargne")
+@NoArgsConstructor // Constructeur vide pour JPA
+@Getter
+@Setter
 public class LivretEpargne extends CompteBancaire {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_livret", nullable = false)
     private TypeLivretEnum typeLivret;
-
-    // Constructeur vide pour JPA
-    public LivretEpargne() {
-        super();
-    }
 
     public LivretEpargne(double solde, TypeLivretEnum typeLivret) {
         super(solde, 0); // Un livret d'épargne ne peut pas avoir de découvert
@@ -25,10 +26,6 @@ public class LivretEpargne extends CompteBancaire {
     public LivretEpargne(TypeLivretEnum typeLivret) {
         super(0,0); // Un livret d'épargne ne peut pas avoir de découvert
         this.typeLivret = typeLivret;
-    }
-
-    public TypeLivretEnum getTypeLivret() {
-        return typeLivret;
     }
 
     @Override

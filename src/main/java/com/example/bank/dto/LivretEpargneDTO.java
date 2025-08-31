@@ -1,5 +1,6 @@
 package com.example.bank.dto;
 
+import com.example.bank.model.enums.TypeLivretEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,5 +8,5 @@ import lombok.Setter;
 @Setter
 public class LivretEpargneDTO extends CompteBancaireDTO {
 
-    private String typeLivret;
+    private TypeLivretEnum typeLivret;
 }
