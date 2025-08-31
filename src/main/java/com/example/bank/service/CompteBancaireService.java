@@ -1,7 +1,6 @@
 package com.example.bank.service;
 
 import com.example.bank.dto.CompteBancaireDTO;
-import com.example.bank.model.CompteBancaire;
 
 import java.util.List;
 
