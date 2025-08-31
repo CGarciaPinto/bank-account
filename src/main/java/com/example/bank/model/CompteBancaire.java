@@ -1,18 +1,57 @@
 package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeOperationEnum;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "numeroDeCompte"
+)
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "compte_bancaire")
 public class CompteBancaire {
 
-    private final String numeroDeCompte;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long idCompte; // PK
+
+    @Column(name = "numero_de_compte", nullable = false, updatable = false, unique = true)
+    private String numeroDeCompte;
+
+    @Column(name = "solde", nullable = false)
     private double solde;
+
+    @Column(name = "decouvert_max", nullable = false)
     private double decouvertMax;
 
+    @OneToMany(mappedBy = "compteBancaire", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final List<Operation> operations = new ArrayList<>();
+
+    public CompteBancaire(double solde, double decouvertMax) {
+        this.numeroDeCompte = UUID.randomUUID().toString();
+        this.solde = solde;
+        this.decouvertMax = decouvertMax;
+    }
+
+    public CompteBancaire(double solde) {
+        this(solde, 0.0);
+    }
+
+    public CompteBancaire(){
+        this(0.0, 0.0);
+    }
+
+    public Long getId() {
+        return idCompte;
+    }
 
     public String getNumeroDeCompte() {
         return numeroDeCompte;
@@ -38,28 +77,12 @@ public class CompteBancaire {
         return List.copyOf(operations);
     }
 
-
-    public CompteBancaire(double solde, double decouvertMax) {
-        this.numeroDeCompte = UUID.randomUUID().toString();
-        this.solde = solde;
-        this.decouvertMax = decouvertMax;
-    }
-
-    public CompteBancaire(double solde) {
-        this(solde, 0.0);
-    }
-
-    public CompteBancaire(){
-        this(0.0, 0.0);
-    }
-
     public void deposerArgent(double montant) {
         if(montant<=0) {
             throw new IllegalArgumentException("Le montant du dépôt doit être supérieur à 0.");
         }
-        double soldeFinal = solde + montant;
-        solde = soldeFinal;
-        enregistrerOperation(TypeOperationEnum.DEPOT, montant, soldeFinal);
+        solde += montant;
+        enregistrerOperation(TypeOperationEnum.DEPOT, montant, solde);
     }
 
     public void retirerArgent(double montant) {
@@ -78,7 +101,7 @@ public class CompteBancaire {
     }
 
     protected void enregistrerOperation(TypeOperationEnum type, double montant, double soldeFinal) {
-        operations.add(new Operation(type, montant, soldeFinal));
+        operations.add(new Operation(type, montant, soldeFinal, this));
     }
 
     @Override

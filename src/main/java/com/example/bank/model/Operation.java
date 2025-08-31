@@ -1,20 +1,47 @@
 package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeOperationEnum;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "operation")
 public class Operation {
-    private final LocalDateTime date;
-    private final TypeOperationEnum type;
-    private final double montant;
-    private final double soldeApresOperation;
 
-    public Operation(TypeOperationEnum type, double montant, double soldeApresOperation) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long idOperation;
+
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private TypeOperationEnum typeOperation;
+
+    @Column(name = "montant", nullable = false)
+    private double montant;
+
+    private double soldeApresOperation;
+
+    @ManyToOne
+    @JoinColumn(name = "compte_id")
+    private CompteBancaire compteBancaire;
+
+    public Operation() {}
+
+    public Operation(TypeOperationEnum typeOperation, double montant, double soldeApresOperation, CompteBancaire compteBancaire) {
         this.date = LocalDateTime.now();
-        this.type = type;
+        this.typeOperation = typeOperation;
         this.montant = montant;
         this.soldeApresOperation = soldeApresOperation;
+        this.compteBancaire = compteBancaire;
+    }
+
+    public Long getId() {
+        return idOperation;
     }
 
     public LocalDateTime getDate() {
@@ -22,7 +49,7 @@ public class Operation {
     }
 
     public TypeOperationEnum getType() {
-        return type;
+        return typeOperation;
     }
 
     public double getMontant() {
@@ -33,8 +60,12 @@ public class Operation {
         return soldeApresOperation;
     }
 
+    public CompteBancaire getCompteBancaire() {
+        return compteBancaire;
+    }
+
     @Override
     public String toString() {
-        return "[" + date + "] " + type.getOperation() + " : " + montant + " (solde: " + soldeApresOperation + ")";
+        return "[" + date + "] " + typeOperation.getOperation() + " : " + montant + " (solde: " + soldeApresOperation + ")";
     }
 }

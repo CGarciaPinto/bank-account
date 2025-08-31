@@ -2,9 +2,14 @@ package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeLivretEnum;
 import com.example.bank.model.enums.TypeOperationEnum;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "livret_epargne")
 public class LivretEpargne extends CompteBancaire {
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_livret", nullable = false)
     private final TypeLivretEnum typeLivret;
 
     public LivretEpargne(double solde, TypeLivretEnum typeLivret) {
