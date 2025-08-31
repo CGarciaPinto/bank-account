@@ -59,7 +59,7 @@ public class ReleveCompte {
                 sb.append("  - ")
                         .append(op.getDate().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .append(" | ")
-                        .append(op.getType())
+                        .append(op.getTypeOperation())
                         .append(" | montant: ")
                         .append(op.getMontant()).append(" €")
                         .append(" | solde après opération: ")

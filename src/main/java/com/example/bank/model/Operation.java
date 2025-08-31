@@ -2,11 +2,13 @@ package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeOperationEnum;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "operation")
+@Getter
 public class Operation {
 
     @Id
@@ -38,30 +40,6 @@ public class Operation {
         this.montant = montant;
         this.soldeApresOperation = soldeApresOperation;
         this.compteBancaire = compteBancaire;
-    }
-
-    public Long getId() {
-        return idOperation;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public TypeOperationEnum getType() {
-        return typeOperation;
-    }
-
-    public double getMontant() {
-        return montant;
-    }
-
-    public double getSoldeApresOperation() {
-        return soldeApresOperation;
-    }
-
-    public CompteBancaire getCompteBancaire() {
-        return compteBancaire;
     }
 
     @Override
