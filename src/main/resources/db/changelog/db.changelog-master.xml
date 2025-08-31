@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Table CompteBancaire -->
+    <changeSet id="1" author="CarlosGP">
+        <createTable tableName="compte_bancaire">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="numero_de_compte" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="solde" type="NUMERIC(15,2)" />
+            <column name="decouvert_max" type="NUMERIC(15,2)" />
+        </createTable>
+    </changeSet>
+
+    <!-- Table LivretEpargne (hérite de CompteBancaire) -->
+    <changeSet id="2" author="CarlosGP">
+        <createTable tableName="livret_epargne">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"
+                             referencedTableName="compte_bancaire"
+                             referencedColumnNames="id"
+                             foreignKeyName="fk_livret_compte"/>
+            </column>
+            <column name="type_livret" type="VARCHAR(50)" />
+        </createTable>
+    </changeSet>
+
+    <!-- Tabla Operation -->
+    <changeSet id="3" author="CarlosGP">
+        <createTable tableName="operation">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date" type="TIMESTAMP" />
+            <column name="type" type="VARCHAR(50)" />
+            <column name="montant" type="NUMERIC(15,2)" />
+            <column name="solde_apres_operation" type="NUMERIC(15,2)" />
+            <column name="compte_id" type="BIGINT"/>
+        </createTable>
+
+        <!-- Foreign key: Operation -> CompteBancaire -->
+        <addForeignKeyConstraint
+                baseTableName="operation"
+                baseColumnNames="compte_id"
+                constraintName="fk_operation_compte"
+                referencedTableName="compte_bancaire"
+                referencedColumnNames="id"/>
+        <addNotNullConstraint tableName="operation" columnName="compte_id" columnDataType="BIGINT"/>
+    </changeSet>
+
+</databaseChangeLog>
