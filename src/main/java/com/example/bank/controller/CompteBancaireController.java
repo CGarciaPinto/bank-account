@@ -1,7 +1,6 @@
 package com.example.bank.controller;
 
 import com.example.bank.model.CompteBancaire;
-import com.example.bank.model.ReleveCompte;
 import com.example.bank.service.CompteBancaireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +19,11 @@ public class CompteBancaireController {
     @PostMapping
     public CompteBancaire creerCompteBancaire() {
         return compteBancaireService.creerCompteBancaire();
+    }
+
+    @GetMapping("/{id}")
+    public CompteBancaire getCompteBancaireById(@PathVariable Long id) {
+        return compteBancaireService.getCompteBancaireById(id);
     }
 
     @GetMapping

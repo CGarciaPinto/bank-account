@@ -24,6 +24,12 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     }
 
     @Override
+    public CompteBancaire getCompteBancaireById(Long idCompte) {
+        return compteBancaireRepository.findById(idCompte)
+                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+    }
+
+    @Override
     public List<CompteBancaire> getAllComptesBancaires() {
         return compteBancaireRepository.findAll();
     }

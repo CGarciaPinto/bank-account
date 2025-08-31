@@ -1,13 +1,14 @@
 package com.example.bank.service;
 
 import com.example.bank.model.CompteBancaire;
-import com.example.bank.model.ReleveCompte;
 
 import java.util.List;
 
 public interface CompteBancaireService {
 
     CompteBancaire creerCompteBancaire();
+
+    CompteBancaire getCompteBancaireById(Long idCompte);
 
     List<CompteBancaire> getAllComptesBancaires();
 
