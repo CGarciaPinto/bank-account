@@ -2,6 +2,8 @@ package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeOperationEnum;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "compte_bancaire")
+@Getter
 public class CompteBancaire {
 
     @Id
@@ -18,12 +21,14 @@ public class CompteBancaire {
     private Long idCompte; // PK
 
     @Column(name = "numero_de_compte", nullable = false, updatable = false, unique = true)
-    private String numeroDeCompte;
+    private final String numeroDeCompte;
 
     @Column(name = "solde", nullable = false)
+    @Setter
     private double solde;
 
     @Column(name = "decouvert_max", nullable = false)
+    @Setter
     private double decouvertMax;
 
     @OneToMany(mappedBy = "compteBancaire", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -45,26 +50,6 @@ public class CompteBancaire {
 
     public Long getId() {
         return idCompte;
-    }
-
-    public String getNumeroDeCompte() {
-        return numeroDeCompte;
-    }
-
-    public double getSolde() {
-        return solde;
-    }
-
-    public void setSolde(double solde) {
-        this.solde = solde;
-    }
-
-    public double getDecouvertMax() {
-        return decouvertMax;
-    }
-
-    public void setDecouvertMax(double decouvertMax) {
-        this.decouvertMax = decouvertMax;
     }
 
     public List<Operation> getOperations() {
