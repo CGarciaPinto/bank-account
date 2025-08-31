@@ -14,7 +14,10 @@ public class ReleveCompte {
     private final double soldeActuel;
     private final List<Operation> operations;
 
+    private final CompteBancaire compteBancaire;
+
     public ReleveCompte(CompteBancaire compte) {
+        this.compteBancaire = compte;
         this.typeCompte = compte instanceof LivretEpargne ? LIVRET_EPARGNE : COMPTE_COURANT;
         this.soldeActuel = compte.getSolde();
 
@@ -24,6 +27,10 @@ public class ReleveCompte {
                 .filter(op -> op.getDate().isAfter(unMoisAvant))
                 .sorted((o1, o2) -> o2.getDate().compareTo(o1.getDate())) // antéchronologique
                 .collect(Collectors.toList());
+    }
+
+    public CompteBancaire getCompteBancaire() {
+        return compteBancaire;
     }
 
     public TypeCompteEnum getTypeCompte() {

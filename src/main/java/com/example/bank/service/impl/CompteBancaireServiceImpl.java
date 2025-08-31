@@ -1,12 +1,16 @@
 package com.example.bank.service.impl;
 
+import com.example.bank.dto.CompteBancaireDTO;
+import com.example.bank.mapper.CompteBancaireMapper;
 import com.example.bank.model.CompteBancaire;
 import com.example.bank.model.ReleveCompte;
 import com.example.bank.repository.CompteBancaireRepository;
 import com.example.bank.service.CompteBancaireService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompteBancaireServiceImpl implements CompteBancaireService {
@@ -18,39 +22,50 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     }
 
     @Override
-    public CompteBancaire creerCompteBancaire() {
+    public CompteBancaireDTO creerCompteBancaire() {
         CompteBancaire compteBancaire = new CompteBancaire();
-        return compteBancaireRepository.save(compteBancaire);
+        CompteBancaire nouvelleCompte = compteBancaireRepository.save(compteBancaire);
+        return CompteBancaireMapper.toDTO(nouvelleCompte);
     }
 
     @Override
-    public CompteBancaire getCompteBancaireById(Long idCompte) {
-        return compteBancaireRepository.findById(idCompte)
+    public CompteBancaireDTO getCompteBancaireById(Long idCompte) {
+        CompteBancaire compteBancaire = compteBancaireRepository.findById(idCompte)
                 .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+        return CompteBancaireMapper.toDTO(compteBancaire);
     }
 
     @Override
-    public List<CompteBancaire> getAllComptesBancaires() {
-        return compteBancaireRepository.findAll();
+    public List<CompteBancaireDTO> getAllComptesBancaires() {
+        return compteBancaireRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(CompteBancaire::getId))
+                .map(CompteBancaireMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CompteBancaire deposerArgent(Long id, double montant) {
-        CompteBancaire compte = compteBancaireRepository.findById(id).orElseThrow(() -> new RuntimeException("Compte introuvable"));
-        compte.deposerArgent(montant);
-        return compteBancaireRepository.save(compte);
+    public CompteBancaireDTO deposerArgent(Long id, double montant) {
+        CompteBancaire compteBancaire = compteBancaireRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+        compteBancaire.deposerArgent(montant);
+        CompteBancaire compteBancaireMAJ = compteBancaireRepository.save(compteBancaire);
+        return CompteBancaireMapper.toDTO(compteBancaireMAJ);
     }
 
     @Override
-    public CompteBancaire retirerArgent(Long id, double montant) {
-        CompteBancaire compte = compteBancaireRepository.findById(id).orElseThrow(() -> new RuntimeException("Compte introuvable"));
-        compte.retirerArgent(montant);
-        return compteBancaireRepository.save(compte);
+    public CompteBancaireDTO retirerArgent(Long id, double montant) {
+        CompteBancaire compteBancaire = compteBancaireRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+        compteBancaire.retirerArgent(montant);
+        CompteBancaire compteBancaireMAJ = compteBancaireRepository.save(compteBancaire);
+        return CompteBancaireMapper.toDTO(compteBancaireMAJ);
     }
 
     @Override
     public String getInfoReleveCompte(Long id) {
-        CompteBancaire compte = compteBancaireRepository.findById(id).orElseThrow(() -> new RuntimeException("Compte introuvable"));
+        CompteBancaire compte = compteBancaireRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
         return new ReleveCompte(compte).toString();
     }
 

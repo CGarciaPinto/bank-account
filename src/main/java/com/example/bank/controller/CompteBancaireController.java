@@ -1,6 +1,6 @@
 package com.example.bank.controller;
 
-import com.example.bank.model.CompteBancaire;
+import com.example.bank.dto.CompteBancaireDTO;
 import com.example.bank.service.CompteBancaireService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,27 +17,27 @@ public class CompteBancaireController {
     }
 
     @PostMapping
-    public CompteBancaire creerCompteBancaire() {
+    public CompteBancaireDTO creerCompteBancaire() {
         return compteBancaireService.creerCompteBancaire();
     }
 
     @GetMapping("/{id}")
-    public CompteBancaire getCompteBancaireById(@PathVariable Long id) {
+    public CompteBancaireDTO getCompteBancaireById(@PathVariable Long id) {
         return compteBancaireService.getCompteBancaireById(id);
     }
 
     @GetMapping
-    public List<CompteBancaire> getAllComptesBancaires() {
+    public List<CompteBancaireDTO> getAllComptesBancaires() {
         return compteBancaireService.getAllComptesBancaires();
     }
 
     @PutMapping("/{id}/depot")
-    public CompteBancaire deposerArgent(@PathVariable Long id, @RequestParam double montant) {
+    public CompteBancaireDTO deposerArgent(@PathVariable Long id, @RequestParam double montant) {
         return compteBancaireService.deposerArgent(id, montant);
     }
 
     @PutMapping("/{id}/retrait")
-    public CompteBancaire retirerArgent(@PathVariable Long id, @RequestParam double montant) {
+    public CompteBancaireDTO retirerArgent(@PathVariable Long id, @RequestParam double montant) {
         return compteBancaireService.retirerArgent(id, montant);
     }
 

@@ -1,6 +1,6 @@
 package com.example.bank.controller;
 
-import com.example.bank.model.LivretEpargne;
+import com.example.bank.dto.LivretEpargneDTO;
 import com.example.bank.model.enums.TypeLivretEnum;
 import com.example.bank.service.LivretEpargneService;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +18,12 @@ public class LivretEpargneController {
     }
 
     @PostMapping
-    public LivretEpargne creerLivretEpargne(@RequestParam TypeLivretEnum typeLivret) {
+    public LivretEpargneDTO creerLivretEpargne(@RequestParam TypeLivretEnum typeLivret) {
         return livretEpargneService.creerLivretEpargne(typeLivret);
     }
 
     @GetMapping
-    public List<LivretEpargne> getAllComptesBancaires() {
+    public List<LivretEpargneDTO> getAllLivretsEpargnes() {
         return livretEpargneService.getAllLivretsEpargnes();
     }
 }

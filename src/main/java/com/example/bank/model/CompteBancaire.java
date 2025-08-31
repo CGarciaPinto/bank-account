@@ -1,18 +1,12 @@
 package com.example.bank.model;
 
 import com.example.bank.model.enums.TypeOperationEnum;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "numeroDeCompte"
-)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "compte_bancaire")
