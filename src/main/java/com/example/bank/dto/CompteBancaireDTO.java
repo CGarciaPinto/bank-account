@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class CompteBancaireDTO {
 
-    private Long id;
+    private Long idCompte;
     private String numeroDeCompte;
     private double solde;
     private double decouvertMax;

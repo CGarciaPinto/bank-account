@@ -9,7 +9,7 @@ public class CompteBancaireMapper {
 
     public static CompteBancaireDTO toDTO(CompteBancaire compte) {
         CompteBancaireDTO dto = new CompteBancaireDTO();
-        dto.setId(compte.getIdCompte());
+        dto.setIdCompte(compte.getIdCompte());
         dto.setNumeroDeCompte(compte.getNumeroDeCompte());
         dto.setSolde(compte.getSolde());
         dto.setDecouvertMax(compte.getDecouvertMax());
