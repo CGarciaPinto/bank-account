@@ -7,9 +7,11 @@ public class OperationMapper {
 
     public static OperationDTO toDTO(Operation operation) {
         OperationDTO dto = new OperationDTO();
+        dto.setIdOperation(operation.getIdOperation());
         dto.setDate(operation.getDate());
         dto.setMontant(operation.getMontant());
         dto.setSoldeApresOperation(operation.getSoldeApresOperation());
+        dto.setTypeOperation(operation.getTypeOperation());
         return dto;
     }
 }
