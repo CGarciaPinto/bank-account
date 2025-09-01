@@ -1,9 +1,11 @@
 package com.example.bank.model;
 
 import com.example.bank.exception.OperationNotAllowedException;
+import com.example.bank.model.enums.TypeOperationEnum;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CompteBancaireTest {
 
@@ -70,14 +72,40 @@ class CompteBancaireTest {
         CompteBancaire compte = new CompteBancaire(500.0, 100.0);
         String resultat = compte.toString();
 
-        // Aseguramos que el toString contiene los campos importantes
         assertTrue(resultat.contains("Compte bancaire"));
         assertTrue(resultat.contains("solde=500.0"));
         assertTrue(resultat.contains("decouvertMax=100.0"));
         assertTrue(resultat.contains("numeroDeCompte="));
 
-        // Imprimimos para inspección manual si queremos
         System.out.println(resultat);
     }
 
+    @Test
+    void testDeposerEtRetirerArgentDevraitAugmenterSoldeEtEnregistrerOperation() {
+        CompteBancaire compteD = new CompteBancaire(100, 50);
+        CompteBancaire compteR = new CompteBancaire(100, 50);
+
+        compteD.deposerArgent(200);
+        compteR.retirerArgent(50);
+
+        assertThat(compteD.getSolde()).isEqualTo(300);
+        assertThat(compteD.getOperations().get(0).getTypeOperation())
+                .isEqualTo(TypeOperationEnum.DEPOT);
+
+        assertThat(compteR.getSolde()).isEqualTo(50);
+        assertThat(compteR.getOperations().get(0).getTypeOperation())
+                .isEqualTo(TypeOperationEnum.RETRAIT);
+    }
+
+    @Test
+    void TestGettersEtSettersDevraientFonctionnerCorrectement() {
+        CompteBancaire compte = new CompteBancaire();
+
+        compte.setDecouvertMax(500.0);
+
+        assertThat(compte.getDecouvertMax()).isEqualTo(500.0);
+        assertThat(compte.getIdCompte()).isNull();
+        assertThat(compte.getNumeroDeCompte()).isNotNull();
+        assertThat(compte.getDecouvertMax()).isEqualTo(500.0);
+    }
 }

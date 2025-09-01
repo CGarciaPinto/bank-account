@@ -4,6 +4,7 @@ import com.example.bank.exception.OperationNotAllowedException;
 import com.example.bank.model.enums.TypeLivretEnum;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LivretEpargneTest {
 
@@ -70,6 +71,24 @@ public class LivretEpargneTest {
                 "Retrait impossible : le livret ne peut pas avoir de découvert.",
                 exception.getMessage()
         );
+    }
+
+    @Test
+    void TestConstructeurGettersSettersToString() {
+        LivretEpargne livret = new LivretEpargne(TypeLivretEnum.LIVRET_A);
+
+        assertThat(livret.getTypeLivret()).isEqualTo(TypeLivretEnum.LIVRET_A);
+        assertThat(livret.getSolde()).isEqualTo(0);
+        assertThat(livret.getDecouvertMax()).isEqualTo(0);
+
+        livret.setTypeLivret(TypeLivretEnum.LIVRET_B);
+        assertThat(livret.getTypeLivret()).isEqualTo(TypeLivretEnum.LIVRET_B);
+
+        String representation = livret.toString();
+        assertThat(representation).contains("LivretEpargne");
+        assertThat(representation).contains("typeLivret=B");
+        assertThat(representation).contains("solde=0");
+        assertThat(representation).contains("plafondDepot=" + TypeLivretEnum.LIVRET_B.getPlafondDepot());
     }
 
 }
