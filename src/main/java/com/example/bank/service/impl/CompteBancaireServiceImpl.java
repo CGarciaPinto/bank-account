@@ -40,7 +40,7 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     public List<CompteBancaireDTO> getAllComptesBancaires() {
         return compteBancaireRepository.findAll()
                 .stream()
-                .sorted(Comparator.comparing(CompteBancaire::getId))
+                .sorted(Comparator.comparing(CompteBancaire::getIdCompte))
                 .map(CompteBancaireMapper::toDTO)
                 .collect(Collectors.toList());
     }

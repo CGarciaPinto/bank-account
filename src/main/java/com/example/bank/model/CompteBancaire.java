@@ -49,10 +49,6 @@ public class CompteBancaire {
         this(0.0, 0.0);
     }
 
-    public Long getId() {
-        return idCompte;
-    }
-
     public List<Operation> getOperations() {
         return List.copyOf(operations);
     }

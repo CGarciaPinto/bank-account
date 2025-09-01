@@ -9,7 +9,7 @@ public class LivretEpargneMapper {
 
     public static LivretEpargneDTO toDTO(LivretEpargne livret) {
         LivretEpargneDTO dto = new LivretEpargneDTO();
-        dto.setId(livret.getId());
+        dto.setId(livret.getIdCompte());
         dto.setNumeroDeCompte(livret.getNumeroDeCompte());
         dto.setSolde(livret.getSolde());
         dto.setDecouvertMax(livret.getDecouvertMax());

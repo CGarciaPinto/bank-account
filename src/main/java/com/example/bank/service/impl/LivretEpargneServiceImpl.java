@@ -35,7 +35,7 @@ public class LivretEpargneServiceImpl implements LivretEpargneService {
     public List<LivretEpargneDTO> getAllLivretsEpargnes() {
         return livretEpargneRepository.findAll()
                 .stream()
-                .sorted(Comparator.comparing(LivretEpargne::getId))
+                .sorted(Comparator.comparing(LivretEpargne::getIdCompte))
                 .map(LivretEpargneMapper::toDTO)
                 .collect(Collectors.toList());
     }
