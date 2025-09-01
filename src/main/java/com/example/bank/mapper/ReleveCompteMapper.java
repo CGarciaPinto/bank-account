@@ -9,7 +9,9 @@ public class ReleveCompteMapper {
 
     public static ReleveCompteDTO toDTO(ReleveCompte releveCompte) {
         ReleveCompteDTO dto = new ReleveCompteDTO();
-        dto.setNumeroDeCompte(releveCompte.getCompteBancaire().getNumeroDeCompte());
+        dto.setTypeCompte(releveCompte.getTypeCompte());
+        dto.setSoldeActuel(releveCompte.getSoldeActuel());
+        dto.setCompteBancaire(releveCompte.getCompteBancaire());
         dto.setOperations(
                 releveCompte.getCompteBancaire().getOperations()
                         .stream()
