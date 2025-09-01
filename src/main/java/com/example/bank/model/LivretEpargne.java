@@ -1,5 +1,6 @@
 package com.example.bank.model;
 
+import com.example.bank.exception.OperationNotAllowedException;
 import com.example.bank.model.enums.TypeLivretEnum;
 import com.example.bank.model.enums.TypeOperationEnum;
 import jakarta.persistence.*;
@@ -31,12 +32,12 @@ public class LivretEpargne extends CompteBancaire {
     @Override
     public void deposerArgent(double montant) {
         if(montant<=0) {
-            throw new IllegalArgumentException("Le montant du dépôt doit être supérieur à 0.");
+            throw new OperationNotAllowedException("Le montant du dépôt doit être supérieur à 0.");
         }
 
         double soldeFinal = super.getSolde() + montant;
         if (soldeFinal >= typeLivret.getPlafondDepot()) {
-            throw new IllegalArgumentException(
+            throw new OperationNotAllowedException(
                     "Dépôt impossible : le solde final dépasse le plafond du livret " +
                             typeLivret.getCode() + " (" + typeLivret.getPlafondDepot() + ")."
             );
@@ -48,13 +49,13 @@ public class LivretEpargne extends CompteBancaire {
     @Override
     public void retirerArgent(double montant) {
         if(montant<=0) {
-            throw new IllegalArgumentException("Le montant du retrait doit être supérieur à 0.");
+            throw new OperationNotAllowedException("Le montant du retrait doit être supérieur à 0.");
         }
 
         double soldeFinal = super.getSolde() - montant;
 
         if (soldeFinal < 0) {
-            throw new IllegalArgumentException("Retrait impossible : le livret ne peut pas avoir de découvert.");
+            throw new OperationNotAllowedException("Retrait impossible : le livret ne peut pas avoir de découvert.");
         }
 
         super.setSolde(soldeFinal);

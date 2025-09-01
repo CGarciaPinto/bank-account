@@ -1,5 +1,6 @@
 package com.example.bank.model;
 
+import com.example.bank.exception.OperationNotAllowedException;
 import com.example.bank.model.enums.TypeOperationEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -58,7 +59,7 @@ public class CompteBancaire {
 
     public void deposerArgent(double montant) {
         if(montant<=0) {
-            throw new IllegalArgumentException("Le montant du dépôt doit être supérieur à 0.");
+            throw new OperationNotAllowedException("Le montant du dépôt doit être supérieur à 0.");
         }
         solde += montant;
         enregistrerOperation(TypeOperationEnum.DEPOT, montant, solde);
@@ -66,13 +67,13 @@ public class CompteBancaire {
 
     public void retirerArgent(double montant) {
         if(montant<=0) {
-            throw new IllegalArgumentException("Le montant du retrait doit être supérieur à 0.");
+            throw new OperationNotAllowedException("Le montant du retrait doit être supérieur à 0.");
         }
 
         double soldeFinal = solde - montant;
 
         if (soldeFinal < -decouvertMax) {
-            throw new IllegalArgumentException("Retrait impossible : dépasse l'autorisation de découvert" +
+            throw new OperationNotAllowedException("Retrait impossible : dépasse l'autorisation de découvert" +
                     " (maximum découvert : " + decouvertMax + ").");
         }
         solde=soldeFinal;

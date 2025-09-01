@@ -1,6 +1,7 @@
 package com.example.bank.service.impl;
 
 import com.example.bank.dto.CompteBancaireDTO;
+import com.example.bank.exception.CompteNotFoundException;
 import com.example.bank.mapper.CompteBancaireMapper;
 import com.example.bank.model.CompteBancaire;
 import com.example.bank.model.ReleveCompte;
@@ -31,7 +32,7 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     @Override
     public CompteBancaireDTO getCompteBancaireById(Long idCompte) {
         CompteBancaire compteBancaire = compteBancaireRepository.findById(idCompte)
-                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+                .orElseThrow(() -> new CompteNotFoundException(idCompte));
         return CompteBancaireMapper.toDTO(compteBancaire);
     }
 
@@ -47,7 +48,7 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     @Override
     public CompteBancaireDTO deposerArgent(Long id, double montant) {
         CompteBancaire compteBancaire = compteBancaireRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+                .orElseThrow(() -> new CompteNotFoundException(id));
         compteBancaire.deposerArgent(montant);
         CompteBancaire compteBancaireMAJ = compteBancaireRepository.save(compteBancaire);
         return CompteBancaireMapper.toDTO(compteBancaireMAJ);
@@ -56,7 +57,7 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     @Override
     public CompteBancaireDTO retirerArgent(Long id, double montant) {
         CompteBancaire compteBancaire = compteBancaireRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+                .orElseThrow(() -> new CompteNotFoundException(id));
         compteBancaire.retirerArgent(montant);
         CompteBancaire compteBancaireMAJ = compteBancaireRepository.save(compteBancaire);
         return CompteBancaireMapper.toDTO(compteBancaireMAJ);
@@ -65,7 +66,7 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     @Override
     public String getInfoReleveCompte(Long id) {
         CompteBancaire compte = compteBancaireRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Compte introuvable"));
+                .orElseThrow(() -> new CompteNotFoundException(id));
         return new ReleveCompte(compte).toString();
     }
 

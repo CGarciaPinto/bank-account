@@ -1,5 +1,6 @@
 package com.example.bank.model;
 
+import com.example.bank.exception.OperationNotAllowedException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +18,8 @@ class CompteBancaireTest {
     void testDeposerArgentMontantNegatifOuZero() {
         CompteBancaire compte = new CompteBancaire();
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> compte.deposerArgent(0)
         );
 
@@ -36,8 +37,8 @@ class CompteBancaireTest {
     void testRetirerArgentMontantNegatifOuZero() {
         CompteBancaire compte = new CompteBancaire(100);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> compte.retirerArgent(-10)
         );
 
@@ -48,8 +49,8 @@ class CompteBancaireTest {
     void testRetirerArgentFondsInsuffisants() {
         CompteBancaire compte = new CompteBancaire(50); //decouvertMax = 0
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> compte.retirerArgent(100)
         );
 

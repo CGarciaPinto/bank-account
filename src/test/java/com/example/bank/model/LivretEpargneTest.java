@@ -1,5 +1,6 @@
 package com.example.bank.model;
 
+import com.example.bank.exception.OperationNotAllowedException;
 import com.example.bank.model.enums.TypeLivretEnum;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +18,8 @@ public class LivretEpargneTest {
     void testDeposerArgentDepotDepassePlafond() {
         LivretEpargne livretEpargne = new LivretEpargne(25000.0, TypeLivretEnum.LIVRET_A);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> livretEpargne.deposerArgent(20000.0)
         );
 
@@ -29,8 +30,8 @@ public class LivretEpargneTest {
     void testDeposerArgentMontantNegatifOuZero() {
         LivretEpargne livretEpargne = new LivretEpargne(25000.0, TypeLivretEnum.LIVRET_A);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> livretEpargne.deposerArgent(0)
         );
 
@@ -48,8 +49,8 @@ public class LivretEpargneTest {
     void testRetirerArgentMontantNegatifOuZero() {
         LivretEpargne livretEpargne = new LivretEpargne(2000.0, TypeLivretEnum.LIVRET_A);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> livretEpargne.retirerArgent(-10)
         );
 
@@ -60,8 +61,8 @@ public class LivretEpargneTest {
     void testRetirerArgentRetraitImpossibleDecouvert() {
         LivretEpargne livretEpargne = new LivretEpargne(1000, TypeLivretEnum.LIVRET_A);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        OperationNotAllowedException exception = assertThrows(
+                OperationNotAllowedException.class,
                 () -> livretEpargne.retirerArgent(1500)
         );
 

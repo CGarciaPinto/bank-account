@@ -1,6 +1,7 @@
 package com.example.bank.service.impl;
 
 import com.example.bank.dto.LivretEpargneDTO;
+import com.example.bank.exception.InvalidParameterException;
 import com.example.bank.mapper.LivretEpargneMapper;
 import com.example.bank.model.LivretEpargne;
 import com.example.bank.model.enums.TypeLivretEnum;
@@ -23,6 +24,9 @@ public class LivretEpargneServiceImpl implements LivretEpargneService {
 
     @Override
     public LivretEpargneDTO creerLivretEpargne(TypeLivretEnum typeLivret) {
+        if (typeLivret == null) {
+            throw new InvalidParameterException("Le type de livret est invalide ou manquant.");
+        }
         LivretEpargne livretEpargne = new LivretEpargne(typeLivret);
         return LivretEpargneMapper.toDTO(livretEpargneRepository.save(livretEpargne));
     }
