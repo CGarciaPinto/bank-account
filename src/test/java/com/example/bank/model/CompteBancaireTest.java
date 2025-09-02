@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CompteBancaireTest {
 
     @Test
-    void testDeposerArgentValide() {
+    void deposerArgent_withValidAmount_shouldIncreaseSolde() {
         CompteBancaire compte = new CompteBancaire();
         compte.deposerArgent(100);
         assertEquals(100, compte.getSolde());
     }
 
     @Test
-    void testDeposerArgentMontantNegatifOuZero() {
+    void deposerArgent_withZeroOrNegativeAmount_shouldThrowOperationNotAllowedException() {
         CompteBancaire compte = new CompteBancaire();
 
         OperationNotAllowedException exception = assertThrows(
@@ -29,14 +29,14 @@ class CompteBancaireTest {
     }
 
     @Test
-    void testRetirerArgentValide() {
+    void retirerArgent_withValidAmount_shouldDecreaseSolde() {
         CompteBancaire compte = new CompteBancaire(200);
         compte.retirerArgent(50);
         assertEquals(150, compte.getSolde());
     }
 
     @Test
-    void testRetirerArgentMontantNegatifOuZero() {
+    void retirerArgent_withZeroOrNegativeAmount_shouldThrowOperationNotAllowedException() {
         CompteBancaire compte = new CompteBancaire(100);
 
         OperationNotAllowedException exception = assertThrows(
@@ -48,7 +48,7 @@ class CompteBancaireTest {
     }
 
     @Test
-    void testRetirerArgentFondsInsuffisants() {
+    void retirerArgent_withInsufficientFunds_shouldThrowOperationNotAllowedException() {
         CompteBancaire compte = new CompteBancaire(50); //decouvertMax = 0
 
         OperationNotAllowedException exception = assertThrows(
@@ -61,14 +61,14 @@ class CompteBancaireTest {
     }
 
     @Test
-    void testRetirerArgentFondsSuffisants() {
+    void retirerArgent_withOverdraftWithinLimit_shouldAllowWithdrawal() {
         CompteBancaire compte = new CompteBancaire(50, 200);
         compte.retirerArgent(200);
         assertEquals(-150.0, compte.getSolde());
     }
 
     @Test
-    void testToString() {
+    void toString_shouldContainRelevantAccountInformation() {
         CompteBancaire compte = new CompteBancaire(500.0, 100.0);
         String resultat = compte.toString();
 
@@ -81,7 +81,7 @@ class CompteBancaireTest {
     }
 
     @Test
-    void testDeposerEtRetirerArgentDevraitAugmenterSoldeEtEnregistrerOperation() {
+    void deposerArgentAndRetirerArgent_shouldUpdateSoldeAndRegisterOperations() {
         CompteBancaire compteD = new CompteBancaire(100, 50);
         CompteBancaire compteR = new CompteBancaire(100, 50);
 
@@ -98,7 +98,7 @@ class CompteBancaireTest {
     }
 
     @Test
-    void TestGettersEtSettersDevraientFonctionnerCorrectement() {
+    void gettersAndSetters_shouldWorkAsExpected() {
         CompteBancaire compte = new CompteBancaire();
 
         compte.setDecouvertMax(500.0);

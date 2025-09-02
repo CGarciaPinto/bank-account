@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LivretEpargneTest {
 
     @Test
-    void testDeposerArgentDepotValide() {
+    void deposerArgent_withValidAmount_shouldIncreaseSolde() {
         LivretEpargne livretEpargne = new LivretEpargne(2000.0, TypeLivretEnum.LIVRET_A);
         livretEpargne.deposerArgent(18000.0);
         assertEquals(20000.0, livretEpargne.getSolde());
     }
 
     @Test
-    void testDeposerArgentDepotDepassePlafond() {
+    void deposerArgent_whenExceedingPlafond_shouldThrowOperationNotAllowedException() {
         LivretEpargne livretEpargne = new LivretEpargne(25000.0, TypeLivretEnum.LIVRET_A);
 
         OperationNotAllowedException exception = assertThrows(
@@ -28,7 +28,7 @@ public class LivretEpargneTest {
     }
 
     @Test
-    void testDeposerArgentMontantNegatifOuZero() {
+    void deposerArgent_withZeroOrNegativeAmount_shouldThrowOperationNotAllowedException() {
         LivretEpargne livretEpargne = new LivretEpargne(25000.0, TypeLivretEnum.LIVRET_A);
 
         OperationNotAllowedException exception = assertThrows(
@@ -40,14 +40,14 @@ public class LivretEpargneTest {
     }
 
     @Test
-    void testRetirerArgentRetraitValide() {
+    void retirerArgent_withValidAmount_shouldDecreaseSolde() {
         LivretEpargne livretEpargne = new LivretEpargne(2000.0, TypeLivretEnum.LIVRET_A);
         livretEpargne.retirerArgent(1500.0);
         assertEquals(500.0, livretEpargne.getSolde());
     }
 
     @Test
-    void testRetirerArgentMontantNegatifOuZero() {
+    void retirerArgent_withZeroOrNegativeAmount_shouldThrowOperationNotAllowedException() {
         LivretEpargne livretEpargne = new LivretEpargne(2000.0, TypeLivretEnum.LIVRET_A);
 
         OperationNotAllowedException exception = assertThrows(
@@ -59,7 +59,7 @@ public class LivretEpargneTest {
     }
 
     @Test
-    void testRetirerArgentRetraitImpossibleDecouvert() {
+    void retirerArgent_whenExceedingSolde_shouldThrowOperationNotAllowedException() {
         LivretEpargne livretEpargne = new LivretEpargne(1000, TypeLivretEnum.LIVRET_A);
 
         OperationNotAllowedException exception = assertThrows(
@@ -74,7 +74,7 @@ public class LivretEpargneTest {
     }
 
     @Test
-    void TestConstructeurGettersSettersToString() {
+    void constructorAndGettersSettersAndToString_shouldWorkAsExpected() {
         LivretEpargne livret = new LivretEpargne(TypeLivretEnum.LIVRET_A);
 
         assertThat(livret.getTypeLivret()).isEqualTo(TypeLivretEnum.LIVRET_A);

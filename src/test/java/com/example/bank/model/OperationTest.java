@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OperationTest {
 
     @Test
-    void testConstructeurEtGetters() {
+    void constructorAndGetters_shouldInitializeCorrectly() {
         CompteBancaire compte = new CompteBancaire(100, 50);
         double soldeApresOp = 150;
         double montant = 50;
@@ -24,7 +24,7 @@ class OperationTest {
     }
 
     @Test
-    void testToString() {
+    void toString_shouldContainRelevantAccountInformation() {
         CompteBancaire compte = new CompteBancaire(200, 100);
         Operation operation = new Operation(TypeOperationEnum.DEPOT, 75, 275, compte);
 

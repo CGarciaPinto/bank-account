@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReleveCompteTest {
 
     @Test
-    void testConstructionCompteCourant() {
+    void constructor_withCompteCourant_shouldInitializeCorrectly() {
         CompteBancaire compte = new CompteBancaire(500);
         compte.deposerArgent(100);
         ReleveCompte releve = new ReleveCompte(compte);
@@ -22,7 +22,7 @@ class ReleveCompteTest {
     }
 
     @Test
-    void testConstructionLivretEpargne() {
+    void constructor_withLivretEpargne_shouldInitializeCorrectly() {
         LivretEpargne livret = new LivretEpargne(TypeLivretEnum.LIVRET_A);
         livret.deposerArgent(200);
         ReleveCompte releve = new ReleveCompte(livret);
@@ -35,7 +35,7 @@ class ReleveCompteTest {
     }
 
     @Test
-    void testToStringAucuneOperation() {
+    void toString_withNoOperations_shouldReturnReadableMessage() {
         CompteBancaire compte = new CompteBancaire(500);
         ReleveCompte releve = new ReleveCompte(compte);
 
@@ -47,7 +47,7 @@ class ReleveCompteTest {
     }
 
     @Test
-    void testToStringAvecOperations() {
+    void toString_withOperations_shouldReturnReadableList() {
         CompteBancaire compte = new CompteBancaire(0);
         compte.deposerArgent(100);
         ReleveCompte releve = new ReleveCompte(compte);
