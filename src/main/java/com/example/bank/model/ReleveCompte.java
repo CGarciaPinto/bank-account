@@ -12,11 +12,11 @@ import static com.example.bank.model.enums.TypeCompteEnum.LIVRET_EPARGNE;
 
 @Getter
 public class ReleveCompte {
+
+    private final CompteBancaire compteBancaire;
     private final TypeCompteEnum typeCompte;
     private final double soldeActuel;
     private final List<Operation> operations;
-
-    private final CompteBancaire compteBancaire;
 
     public ReleveCompte(CompteBancaire compte) {
         this.compteBancaire = compte;
@@ -24,7 +24,6 @@ public class ReleveCompte {
         this.soldeActuel = compte.getSolde();
 
         LocalDateTime unMoisAvant = LocalDateTime.now().minusMonths(1);
-
         this.operations = compte.getOperations().stream()
                 .filter(op -> op.getDate().isAfter(unMoisAvant))
                 .sorted((o1, o2) -> o2.getDate().compareTo(o1.getDate())) // antéchronologique

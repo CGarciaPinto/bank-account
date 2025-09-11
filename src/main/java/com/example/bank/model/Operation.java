@@ -26,6 +26,7 @@ public class Operation {
     @Column(name = "montant", nullable = false)
     private double montant;
 
+    @Column(name = "solde_apres_operation", nullable = false)
     private double soldeApresOperation;
 
     @ManyToOne
