@@ -1,109 +1,96 @@
-# 💰 **Bank Account** 💰
-🌐 Disponible en :  
-[🇫🇷 Français](README.md) | [🇬🇧 English](README.en.md)
+# Bank Account API
 
-# Sujet
+Une application d'exemple construite avec **Java 17**, **Spring Boot**, **PostgreSQL**, et containerisée avec **Docker**.  
+Elle inclut un pipeline de **CI/CD GitLab**.
 
-Ce kata est un challenge d'[architecture hexagonale](https://fr.wikipedia.org/wiki/Architecture_hexagonale) autour du domaine de la banque.
+---
 
-## ⚠️ Modalités de candidatures ⚠️
+## Déscription
+L’application implémente une gestion simplifiée de comptes bancaires avec les fonctionnalités suivantes :
 
-> Ce kata a deux objectifs : 
-> - d'une part, permettre votre évaluation technique en tant que candidat ; 
-> - d'autre part servir de base à votre montée en compétences si vous nous rejoignez :smile:.
-> 
-> Il a donc volontairement un scope très large.
-> 
-> **Dans le premier cas (processus de recrutement), nous comprenons que le temps est une ressource précieuse et limitée. 
-> C'est pourquoi nous vous proposons trois niveaux d'engagement, selon le temps que vous pouvez y consacrer :**
->
-> 1. vous avez peu de temps (une soirée) : Concentrez-vous uniquement sur le code métier. 
->   - Assurez-vous qu'il est testé et fonctionnel, avec des adapteurs de tests. 
->   - **Nous ne vous tiendrons pas rigueur de ne pas avoir réalisé les autres parties.** 
->   - **Nous aborderons ensemble les éléments non couverts lors de l'entretien technique**
-> 2. vous avez plus de temps (plusieurs soirées) : le code métier, exposé derrière une api REST, et une persistance fonctionnelle ; le tout testé de bout en bout.
-> 3. vous avez beaucoup de temps, et envie d'aller plus loin : la même chose, avec la containerisation de l'application, et une pipeline de CI/CD ;p
-> 
-> Vous serez évalués notamment sur les points suivants :
-> 
-> - Tout code livré doit être testé de manière adéquate (cas passants et non passants)
-> - Nous serons très vigilants sur le design, la qualité, et la lisibilité du code (et des commits)
-> 
-> Nous comprenons que chaque candidat a des contraintes de temps différentes, et nous valoriserons votre capacité à prioriser et à livrer un travail de qualité dans le temps imparti.
->
+- **Compte bancaire** :
+  - Numéro de compte unique
+  - Solde du compte
+  - Dépôt et retrait d’argent
+  - Règle métier : un retrait ne peut être effectué que si le montant demandé n’excède pas le solde disponible
 
-## Modalités de réalisation
+- **Découvert autorisé** :
+  - Possibilité de définir une autorisation de découvert
+  - Un retrait est possible même si le solde devient négatif, tant que la limite du découvert n’est pas dépassée
 
-> Pour réaliser ce kata : 
-> - Tirez une branche depuis main
-> - Réalisez vos développements sur cette branche
-> - Quand vous êtes prêts à effectuer votre rendu, ouvrez une merge request vers main 
->
-> ⚠️ L'ouverture de votre merge request déclenchera la revue de votre code !
-> 
->⚠️ Cette merge request sert de support à la revue de code, **NE LA MERGEZ PAS !**
->
+- **Livret d’épargne** :
+  - Compte bancaire avec un plafond de dépôt (ex. : 22 950 € pour un Livret A)
+  - Aucun découvert autorisé
 
+- **Relevé de compte** :
+  - Génération d’un relevé mensuel (mois glissant)
+  - Indique le type de compte (Livret ou Compte courant)
+  - Solde du compte à la date d’émission du relevé
+  - Liste des opérations, triées par date en ordre antéchronologique
 
-### Feature 1 : le compte bancaire
+---
 
-On souhaite proposer une fonctionnalité de compte bancaire. 
+## Technologies utilisées
+- Java 17  
+- Spring Boot 3.5.5
+- Maven 3.8.2
+- PostgreSQL 17  
+- Docker & Docker Compose  
+- GitLab CI/CD   
 
-Ce dernier devra disposer : 
+---
 
-- D'un numéro de compte unique (format libre)
-- D'un solde
-- D'une fonctionnalité de dépôt d'argent
-- D'une fonctionnalité de retrait d'argent
+## Prérequis
+- [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)  
+- [Maven](https://maven.apache.org/)  
+- [Docker](https://www.docker.com/products/docker-desktop/)    
 
-La règle métier suivante doit être implémentée : 
+---
 
-- Un retrait ne peut pas être effectué s'il représente plus d'argent qu'il n'y en a sur le compte
+## Exécution en local (IntelliJ ou terminal)
+1. Cloner le dépôt :  
+   ```bash
+    git clone https://github.com/CGarciaPinto/bank-account.git
+    cd bank-account
+2. Construire et exécuter avec Maven :
+    ```bash
+    mvn spring-boot:run
+3. L’application sera disponible sur :
+    ```bash
+    API : http://localhost:8080/api
 
-__          
+## Exécution avec Docker
+1. Construire les images :
+    ```bash
+    docker-compose build
+2. Lancer les conteneurs :
+    ```bash
+    docker-compose up
+    -- L'application sera disponible sur http://localhost:8080
+3. Accès à l’application
+    ```bash
+    API : http://localhost:8080/api
+4. Accès à la base de données :
+    ```bash
+    Hôte : localhost
+    Port : 5432
+    DB : bankdb
+    Utilisateur : bankuser
+    Mot de passe : admin
+5. Arrêter les conteneurs (sans supprimer les données) :
+    ```bash
+    docker-compose down
+6. Voir les logs en temps réel :
+    ```bash
+    docker-compose logs -f
 
-### Feature 2 : le découvert
+## Configuration
 
-On souhaite proposer un système de découvert autorisé sur les comptes bancaires.
+**Profils Spring :**
+- `dev` : pour l’exécution locale
+- `docker` : pour l’exécution dans les conteneurs
 
-La règle métier suivante doit être implémentée : 
-
-- Si un compte dispose d'une autorisation de découvert, alors un retrait qui serait supérieur au solde du compte est autorisé
-si le solde final ne dépasse pas le montant de l'autorisation de découvert
-
-__
-
-### Feature 3 : le livret
-
-On souhaite proposer un livret d'épargne.
-
-Un livret d'épargne est un compte bancaire qui : 
-
-- Dispose d'un plafond de dépôt : on ne peut déposer d'argent sur ce compte que dans la limite du plafond du compte (exemple : 22950€ sur un livret A)
-- Ne peut pas avoir d'autorisation de découvert
-
-__
-
-### Feature 4 : le relevé de compte
-
-On souhaite proposer une fonctionnalité de relevé mensuel (sur un mois glissant) des opérations sur le compte
-
-Ce relevé devra faire apparaître : 
-
-- Le type de compte (Livret ou Compte Courant)
-- Le solde du compte à la date d'émission du relevé
-- La liste des opérations ayant eu lieu sur le compte, triées par date, dans l'ordre antéchronologique
-
-## Bonne chance !
-
-
-![archi-hexa](./assets/hexa-schema.png)
-
-
- 
-
-
-
+Les propriétés de connexion à la base de données sont définies via les variables d’environnement dans `docker-compose.yml` et `.gitlab-ci.yml`.
 
 
 
