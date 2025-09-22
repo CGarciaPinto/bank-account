@@ -30,7 +30,7 @@ public class Operation {
     private double soldeApresOperation;
 
     @ManyToOne
-    @JoinColumn(name = "compte_id")
+    @JoinColumn(name = "compte_id", nullable = false)
     private CompteBancaire compteBancaire;
 
     public Operation() {}

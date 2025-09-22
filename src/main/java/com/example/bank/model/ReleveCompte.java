@@ -24,7 +24,8 @@ public class ReleveCompte {
         this.soldeActuel = compte.getSolde();
 
         LocalDateTime unMoisAvant = LocalDateTime.now().minusMonths(1);
-        this.operations = compte.getOperations().stream()
+        this.operations = compte.getOperations()
+                .stream()
                 .filter(op -> op.getDate().isAfter(unMoisAvant))
                 .sorted((o1, o2) -> o2.getDate().compareTo(o1.getDate())) // antéchronologique
                 .collect(Collectors.toList());
