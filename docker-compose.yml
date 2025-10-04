@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   bank_app:
     container_name: bank-app
@@ -11,7 +9,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - bank_db
-
+      - sonarqube
   bank_db:
     container_name: bank_db
     image: postgres:17
@@ -21,3 +19,23 @@ services:
       POSTGRES_DB: bankdb
       POSTGRES_USER: bankuser
       POSTGRES_PASSWORD: admin
+    volumes:
+      - bank_db_data:/var/lib/postgresql/data
+
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube:lts-community
+    ports:
+      - "9000:9000" #pass: admin123
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  bank_db_data:
