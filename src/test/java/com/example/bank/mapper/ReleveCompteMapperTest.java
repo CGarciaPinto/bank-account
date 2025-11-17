@@ -12,7 +12,7 @@ public class ReleveCompteMapperTest {
     @Test
     void testToDTO() {
         CompteBancaire compteBancaire = new CompteBancaire(500, 200);
-        compteBancaire.deposerArgent(500L);
+        compteBancaire.deposerArgent(500L, "test");
 
         ReleveCompte releveCompte = new ReleveCompte(compteBancaire);
 

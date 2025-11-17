@@ -11,7 +11,7 @@ public class LivretEpargneTest {
     @Test
     void deposerArgent_withValidAmount_shouldIncreaseSolde() {
         LivretEpargne livretEpargne = new LivretEpargne(2000.0, TypeLivretEnum.LIVRET_A);
-        livretEpargne.deposerArgent(18000.0);
+        livretEpargne.deposerArgent(18000.0, "test");
         assertEquals(20000.0, livretEpargne.getSolde());
     }
 
@@ -21,7 +21,7 @@ public class LivretEpargneTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> livretEpargne.deposerArgent(20000.0)
+                () -> livretEpargne.deposerArgent(20000.0, "test")
         );
 
         assertEquals("Dépôt impossible : le solde final dépasse le plafond du livret A (22950.0).", exception.getMessage());
@@ -33,7 +33,7 @@ public class LivretEpargneTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> livretEpargne.deposerArgent(0)
+                () -> livretEpargne.deposerArgent(0, "test")
         );
 
         assertEquals("Le montant du dépôt doit être supérieur à 0.", exception.getMessage());
@@ -42,7 +42,7 @@ public class LivretEpargneTest {
     @Test
     void retirerArgent_withValidAmount_shouldDecreaseSolde() {
         LivretEpargne livretEpargne = new LivretEpargne(2000.0, TypeLivretEnum.LIVRET_A);
-        livretEpargne.retirerArgent(1500.0);
+        livretEpargne.retirerArgent(1500.0, "test");
         assertEquals(500.0, livretEpargne.getSolde());
     }
 
@@ -52,7 +52,7 @@ public class LivretEpargneTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> livretEpargne.retirerArgent(-10)
+                () -> livretEpargne.retirerArgent(-10, "test")
         );
 
         assertEquals("Le montant du retrait doit être supérieur à 0.", exception.getMessage());
@@ -64,7 +64,7 @@ public class LivretEpargneTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> livretEpargne.retirerArgent(1500)
+                () -> livretEpargne.retirerArgent(1500, "test")
         );
 
         assertEquals(

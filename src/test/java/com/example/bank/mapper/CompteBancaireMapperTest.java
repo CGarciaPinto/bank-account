@@ -11,7 +11,7 @@ class CompteBancaireMapperTest {
     @Test
     void testToDTO() {
         CompteBancaire compte = new CompteBancaire(500.0, 200.0);
-        compte.deposerArgent(200);
+        compte.deposerArgent(200, "test");
 
         CompteBancaireDTO dto = CompteBancaireMapper.toDTO(compte);
 

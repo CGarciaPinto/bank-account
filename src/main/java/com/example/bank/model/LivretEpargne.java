@@ -30,7 +30,7 @@ public class LivretEpargne extends CompteBancaire {
     }
 
     @Override
-    public void deposerArgent(double montant) {
+    public void deposerArgent(double montant, String description) {
         if(montant<=0) {
             throw new OperationNotAllowedException("Le montant du dépôt doit être supérieur à 0.");
         }
@@ -43,11 +43,11 @@ public class LivretEpargne extends CompteBancaire {
             );
         }
         super.setSolde(soldeFinal);
-        super.enregistrerOperation(TypeOperationEnum.DEPOT, montant, soldeFinal);
+        super.enregistrerOperation(TypeOperationEnum.DEPOT, montant, soldeFinal, description);
     }
 
     @Override
-    public void retirerArgent(double montant) {
+    public void retirerArgent(double montant, String description) {
         if(montant<=0) {
             throw new OperationNotAllowedException("Le montant du retrait doit être supérieur à 0.");
         }
@@ -59,7 +59,7 @@ public class LivretEpargne extends CompteBancaire {
         }
 
         super.setSolde(soldeFinal);
-        super.enregistrerOperation(TypeOperationEnum.RETRAIT, montant, soldeFinal);
+        super.enregistrerOperation(TypeOperationEnum.RETRAIT, montant, soldeFinal, description);
     }
 
     @Override

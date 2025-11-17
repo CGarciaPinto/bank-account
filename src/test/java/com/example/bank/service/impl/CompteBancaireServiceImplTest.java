@@ -1,6 +1,7 @@
 package com.example.bank.service.impl;
 
 import com.example.bank.dto.CompteBancaireDTO;
+import com.example.bank.dto.OperationRequestDTO;
 import com.example.bank.exception.CompteNotFoundException;
 import com.example.bank.model.CompteBancaire;
 import com.example.bank.repository.CompteBancaireRepository;
@@ -85,7 +86,9 @@ class CompteBancaireServiceImplTest {
         when(compteBancaireRepository.findById(1L)).thenReturn(Optional.of(compte));
         when(compteBancaireRepository.save(compte)).thenReturn(compte);
 
-        CompteBancaireDTO dto = compteBancaireService.deposerArgent(1L, 50.0);
+        OperationRequestDTO operationRequestDTO = new OperationRequestDTO(50.0, "test");
+
+        CompteBancaireDTO dto = compteBancaireService.deposerArgent(1L, operationRequestDTO);
 
         assertThat(dto.getSolde()).isEqualTo(150.0);
         verify(compteBancaireRepository).save(compte);
@@ -97,7 +100,9 @@ class CompteBancaireServiceImplTest {
         when(compteBancaireRepository.findById(1L)).thenReturn(Optional.of(compte));
         when(compteBancaireRepository.save(compte)).thenReturn(compte);
 
-        CompteBancaireDTO dto = compteBancaireService.retirerArgent(1L, 50.0);
+        OperationRequestDTO operationRequestDTO = new OperationRequestDTO(50.0, "test");
+
+        CompteBancaireDTO dto = compteBancaireService.retirerArgent(1L, operationRequestDTO);
 
         assertThat(dto.getSolde()).isEqualTo(150.0);
         verify(compteBancaireRepository).save(compte);
@@ -138,23 +143,23 @@ class CompteBancaireServiceImplTest {
     void deposerArgent_withUnknownId_shouldThrowCompteNotFoundException() {
         // given
         Long id = 123L;
-        double montant = 200.0;
+        OperationRequestDTO operationRequestDTO = new OperationRequestDTO(200.0, "test");
         when(compteBancaireRepository.findById(id)).thenReturn(Optional.empty());
 
         // when + then
         assertThrows(CompteNotFoundException.class,
-                () -> compteBancaireService.deposerArgent(id, montant));
+                () -> compteBancaireService.deposerArgent(id, operationRequestDTO));
     }
 
     @Test
     void retirerArgent_withUnknownId_shouldThrowCompteNotFoundException() {
         // given
         Long id = 456L;
-        double montant = 150.0;
+        OperationRequestDTO operationRequestDTO = new OperationRequestDTO(150.0, "test");
         when(compteBancaireRepository.findById(id)).thenReturn(Optional.empty());
 
         // when + then
         assertThrows(CompteNotFoundException.class,
-                () -> compteBancaireService.retirerArgent(id, montant));
+                () -> compteBancaireService.retirerArgent(id, operationRequestDTO));
     }
 }

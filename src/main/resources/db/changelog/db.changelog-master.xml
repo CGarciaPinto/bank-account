@@ -55,4 +55,6 @@
         <addNotNullConstraint tableName="operation" columnName="compte_id" columnDataType="BIGINT"/>
     </changeSet>
 
+    <include file="db/changelog/db.changelog-operation-table.xml"/>
+
 </databaseChangeLog>

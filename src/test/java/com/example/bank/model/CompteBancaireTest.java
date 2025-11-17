@@ -12,7 +12,7 @@ class CompteBancaireTest {
     @Test
     void deposerArgent_withValidAmount_shouldIncreaseSolde() {
         CompteBancaire compte = new CompteBancaire();
-        compte.deposerArgent(100);
+        compte.deposerArgent(100, "test");
         assertEquals(100, compte.getSolde());
     }
 
@@ -22,7 +22,7 @@ class CompteBancaireTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> compte.deposerArgent(0)
+                () -> compte.deposerArgent(0, "test")
         );
 
         assertEquals("Le montant du dépôt doit être supérieur à 0.", exception.getMessage());
@@ -31,7 +31,7 @@ class CompteBancaireTest {
     @Test
     void retirerArgent_withValidAmount_shouldDecreaseSolde() {
         CompteBancaire compte = new CompteBancaire(200);
-        compte.retirerArgent(50);
+        compte.retirerArgent(50, "test");
         assertEquals(150, compte.getSolde());
     }
 
@@ -41,7 +41,7 @@ class CompteBancaireTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> compte.retirerArgent(-10)
+                () -> compte.retirerArgent(-10, "test")
         );
 
         assertEquals("Le montant du retrait doit être supérieur à 0.", exception.getMessage());
@@ -53,7 +53,7 @@ class CompteBancaireTest {
 
         OperationNotAllowedException exception = assertThrows(
                 OperationNotAllowedException.class,
-                () -> compte.retirerArgent(100)
+                () -> compte.retirerArgent(100, "test")
         );
 
         assertEquals(
@@ -63,7 +63,7 @@ class CompteBancaireTest {
     @Test
     void retirerArgent_withOverdraftWithinLimit_shouldAllowWithdrawal() {
         CompteBancaire compte = new CompteBancaire(50, 200);
-        compte.retirerArgent(200);
+        compte.retirerArgent(200, "test");
         assertEquals(-150.0, compte.getSolde());
     }
 
@@ -85,8 +85,8 @@ class CompteBancaireTest {
         CompteBancaire compteD = new CompteBancaire(100, 50);
         CompteBancaire compteR = new CompteBancaire(100, 50);
 
-        compteD.deposerArgent(200);
-        compteR.retirerArgent(50);
+        compteD.deposerArgent(200, "test");
+        compteR.retirerArgent(50, "test");
 
         assertThat(compteD.getSolde()).isEqualTo(300);
         assertThat(compteD.getOperations().get(0).getTypeOperation())

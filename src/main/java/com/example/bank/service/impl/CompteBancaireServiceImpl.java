@@ -1,6 +1,7 @@
 package com.example.bank.service.impl;
 
 import com.example.bank.dto.CompteBancaireDTO;
+import com.example.bank.dto.OperationRequestDTO;
 import com.example.bank.exception.CompteNotFoundException;
 import com.example.bank.mapper.CompteBancaireMapper;
 import com.example.bank.model.CompteBancaire;
@@ -46,19 +47,19 @@ public class CompteBancaireServiceImpl implements CompteBancaireService {
     }
 
     @Override
-    public CompteBancaireDTO deposerArgent(Long id, double montant) {
+    public CompteBancaireDTO deposerArgent(Long id, OperationRequestDTO operationRequestDTO) {
         CompteBancaire compteBancaire = compteBancaireRepository.findById(id)
                 .orElseThrow(() -> new CompteNotFoundException(id));
-        compteBancaire.deposerArgent(montant);
+        compteBancaire.deposerArgent(operationRequestDTO.getMontant(), operationRequestDTO.getDescription());
         CompteBancaire compteBancaireMAJ = compteBancaireRepository.save(compteBancaire);
         return CompteBancaireMapper.toDTO(compteBancaireMAJ);
     }
 
     @Override
-    public CompteBancaireDTO retirerArgent(Long id, double montant) {
+    public CompteBancaireDTO retirerArgent(Long id, OperationRequestDTO operationRequestDTO) {
         CompteBancaire compteBancaire = compteBancaireRepository.findById(id)
                 .orElseThrow(() -> new CompteNotFoundException(id));
-        compteBancaire.retirerArgent(montant);
+        compteBancaire.retirerArgent(operationRequestDTO.getMontant(), operationRequestDTO.getDescription());
         CompteBancaire compteBancaireMAJ = compteBancaireRepository.save(compteBancaire);
         return CompteBancaireMapper.toDTO(compteBancaireMAJ);
     }

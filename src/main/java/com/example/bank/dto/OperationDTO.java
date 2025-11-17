@@ -15,4 +15,5 @@ public class OperationDTO {
     private TypeOperationEnum typeOperation;
     private double montant;
     private double soldeApresOperation;
+    private String description;
 }

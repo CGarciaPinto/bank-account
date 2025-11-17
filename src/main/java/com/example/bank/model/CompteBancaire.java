@@ -53,15 +53,15 @@ public class CompteBancaire {
         return List.copyOf(operations);
     }
 
-    public void deposerArgent(double montant) {
+    public void deposerArgent(double montant, String description) {
         if(montant<=0) {
             throw new OperationNotAllowedException("Le montant du dépôt doit être supérieur à 0.");
         }
         solde += montant;
-        enregistrerOperation(TypeOperationEnum.DEPOT, montant, solde);
+        enregistrerOperation(TypeOperationEnum.DEPOT, montant, solde, description);
     }
 
-    public void retirerArgent(double montant) {
+    public void retirerArgent(double montant, String description) {
         if(montant<=0) {
             throw new OperationNotAllowedException("Le montant du retrait doit être supérieur à 0.");
         }
@@ -73,11 +73,11 @@ public class CompteBancaire {
                     " (maximum découvert : " + decouvertMax + ").");
         }
         solde=soldeFinal;
-        enregistrerOperation(TypeOperationEnum.RETRAIT, montant, soldeFinal);
+        enregistrerOperation(TypeOperationEnum.RETRAIT, montant, soldeFinal, description);
     }
 
-    protected void enregistrerOperation(TypeOperationEnum type, double montant, double soldeFinal) {
-        operations.add(new Operation(type, montant, soldeFinal, this));
+    protected void enregistrerOperation(TypeOperationEnum type, double montant, double soldeFinal, String description) {
+        operations.add(new Operation(type, montant, soldeFinal, this, description));
     }
 
     @Override

@@ -33,6 +33,9 @@ public class Operation {
     @JoinColumn(name = "compte_id", nullable = false)
     private CompteBancaire compteBancaire;
 
+    @Column(name = "description")
+    private String description;
+
     public Operation() {}
 
     public Operation(TypeOperationEnum typeOperation, double montant, double soldeApresOperation, CompteBancaire compteBancaire) {
@@ -41,6 +44,15 @@ public class Operation {
         this.montant = montant;
         this.soldeApresOperation = soldeApresOperation;
         this.compteBancaire = compteBancaire;
+    }
+
+    public Operation(TypeOperationEnum typeOperation, double montant, double soldeApresOperation, CompteBancaire compteBancaire, String description) {
+        this.date = LocalDateTime.now();
+        this.typeOperation = typeOperation;
+        this.montant = montant;
+        this.soldeApresOperation = soldeApresOperation;
+        this.compteBancaire = compteBancaire;
+        this.description = description;
     }
 
     @Override

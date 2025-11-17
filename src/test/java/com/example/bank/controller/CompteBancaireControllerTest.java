@@ -1,7 +1,9 @@
 package com.example.bank.controller;
 
 import com.example.bank.dto.CompteBancaireDTO;
+import com.example.bank.dto.OperationRequestDTO;
 import com.example.bank.service.CompteBancaireService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -68,26 +73,36 @@ class CompteBancaireControllerTest {
     @Test
     void deposerArgent_shouldReturnStatusOk() throws Exception {
         Long id = 1L;
-        double montant = 100.0;
+        OperationRequestDTO request = new OperationRequestDTO(100.0, "test");
         CompteBancaireDTO dto = new CompteBancaireDTO();
-        when(compteBancaireService.deposerArgent(id, montant)).thenReturn(dto);
 
+        doReturn(dto)
+                .when(compteBancaireService)
+                .deposerArgent(eq(id), any(OperationRequestDTO.class));
+
+        ObjectMapper mapper = new ObjectMapper();
         mockMvc.perform(put("/api/comptes/{id}/depot", id)
-                        .param("montant", String.valueOf(montant))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
     void retirerArgent_shouldReturnStatusOk() throws Exception {
         Long id = 1L;
-        double montant = 50.0;
+        OperationRequestDTO request = new OperationRequestDTO(50.0, "test retrait");
         CompteBancaireDTO dto = new CompteBancaireDTO();
-        when(compteBancaireService.retirerArgent(id, montant)).thenReturn(dto);
 
+        doReturn(dto)
+                .when(compteBancaireService)
+                .retirerArgent(eq(id), any(OperationRequestDTO.class));
+
+        ObjectMapper mapper = new ObjectMapper();
         mockMvc.perform(put("/api/comptes/{id}/retrait", id)
-                        .param("montant", String.valueOf(montant))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 

@@ -12,7 +12,7 @@ class ReleveCompteTest {
     @Test
     void constructor_withCompteCourant_shouldInitializeCorrectly() {
         CompteBancaire compte = new CompteBancaire(500);
-        compte.deposerArgent(100);
+        compte.deposerArgent(100, "test");
         ReleveCompte releve = new ReleveCompte(compte);
 
         assertThat(releve.getTypeCompte()).isEqualTo(TypeCompteEnum.COMPTE_COURANT);
@@ -24,7 +24,7 @@ class ReleveCompteTest {
     @Test
     void constructor_withLivretEpargne_shouldInitializeCorrectly() {
         LivretEpargne livret = new LivretEpargne(TypeLivretEnum.LIVRET_A);
-        livret.deposerArgent(200);
+        livret.deposerArgent(200, "test");
         ReleveCompte releve = new ReleveCompte(livret);
 
         assertThat(releve.getTypeCompte()).isEqualTo(TypeCompteEnum.LIVRET_EPARGNE);
@@ -49,7 +49,7 @@ class ReleveCompteTest {
     @Test
     void toString_withOperations_shouldReturnReadableList() {
         CompteBancaire compte = new CompteBancaire(0);
-        compte.deposerArgent(100);
+        compte.deposerArgent(100, "test");
         ReleveCompte releve = new ReleveCompte(compte);
 
         String s = releve.toString();

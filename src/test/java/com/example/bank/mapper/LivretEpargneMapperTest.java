@@ -12,7 +12,7 @@ class LivretEpargneMapperTest {
     @Test
     void testToDTO() {
         LivretEpargne livret = new LivretEpargne(TypeLivretEnum.LIVRET_A);
-        livret.deposerArgent(200);
+        livret.deposerArgent(200, "test");
 
         LivretEpargneDTO dto = LivretEpargneMapper.toDTO(livret);
 

@@ -12,6 +12,7 @@ public class OperationMapper {
         dto.setMontant(operation.getMontant());
         dto.setSoldeApresOperation(operation.getSoldeApresOperation());
         dto.setTypeOperation(operation.getTypeOperation());
+        dto.setDescription(operation.getDescription());
         return dto;
     }
 }
